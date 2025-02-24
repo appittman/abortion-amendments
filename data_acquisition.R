@@ -220,4 +220,3 @@ hps <- tibble(tidycensus::fips_codes) |>
 
 save(hps, file = here("data", "hps.Rdata"), compress = "bzip2")
 # takes a bit longer but bzip compression makes it a bit smaller
-
