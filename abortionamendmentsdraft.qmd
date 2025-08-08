@@ -1,0 +1,150 @@
+---
+title: "Abortion Protections and Mental Health: Evidence from Ohio"
+author: "AP Pittman"
+format: pdf
+editor: visual
+bibliography: references.bib
+csl: american-sociological-association.csl
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+library(here)
+library(tidyverse)
+library(did)
+load(here("data", "dynamicte1_w.Rdata"))
+load(here("data", "dynamicte2_w.Rdata"))
+load(here("data", "suppanalyses.Rdata"))
+```
+
+## Abstract
+
+Despite the documented negative effects on women's mental health of abortion restrictions, little research to date has addressed the inverse process: does enacting *protections* to abortion *improve* mental health? The timing of the passage of the citizen-initiated constitutional amendment in Ohio provides a unique opportunity to answer this question. Ohio's amendment passed in the November 2023 general election. Unlike abortion protection ballot measures in other states, this did *not* occur simultaneously with a major midterm or presidential election, which would add noise to any estimates of mental health taken at that time. The present study uses weighted difference-in-differences methodology to estimate the impact of Ohio's constitutional amendment protecting abortion rights on women's mental health, using Household Pulse Survey data from 2023 and 2024. The overall aggregated treatment effect for Analysis 1, which compared Ohio to all other states, was **-0.194** (95% CI: -0.268 to -0.120). The overall aggregated treatment effect for Analysis 2, which compared Ohio to five states who passed constitutional amendments in November 2024, was **-0.260** (95% CI: -0.465 to -0.055). To interpret this in the context of other abortion and mental health research, this effect size is comparable to the magnitude of the effect size using Household Pulse Survey data reported in @thornburg2024 of the *Dobbs* decision, but in the opposite direction. The results of this study indicate that enacting abortion protections can benefit mental health.
+
+## Introduction
+
+The Supreme Court's ruling in *Dobbs v. Jackson* in June of 2022 overturned key elements of a previous case, *Roe v. Wade*, which protected a woman's right to an abortion, throwing the right instead to the state governments to adjudicate. By a year post-*Dobbs*, thirteen states had banned abortion completely, with several others imposing extreme limitations on how and when women could seek abortions [@baden2023]. However, a countervailing trend also emerged, with several states enacting policies or approving constitutional amendments to expand the right to an abortion within their borders [@roe24]. In particular, several states — including Michigan in 2022, Ohio in 2023, and Arizona, Colorado, Missouri, Montana, and Nevada in 2024 — successfully introduced and passed citizen-initiated ballot measures to amend their state's constitution to protect abortion access [@kaiserfamilyfoundation2024].
+
+*Restrictions* on abortion have been shown to *harm* mental health, with anti-abortion laws linked to higher suicide rates among women and higher rates of symptoms of anxiety and depression [@zandberg2023 @thornburg2024]. Sociologically, this finding makes sense: we know that decreases in autonomy and control are bad for health across populations [@marmot2004]; @marmot2015\]; this means that being in an environment which puts restrictions on bodies capable of childbirth could affect residents regardless of whether or not they personally are in need of an abortion. In addition, decreasing legal methods of abortion drives seekers to more unsafe methods, which may hold negative consequences for their physical and mental health [@clarke2021]. Finally, enacting abortion restrictions, by design, adds to burden and hardship on those seeking abortion, which has predictably deleterious effects on mental health [@austin2018].
+
+Despite the documented negative effects on mental health of abortion restrictions, little research to date has addressed the inverse process: does enacting *protections* to abortion *improve* mental health? There is little direct evidence, but related work in sociology has concluded that living in states with less restrictive policy contexts results in higher educational attainment, higher income, and more financial stability for women who grow up in those states [@everett2024]. In addition, states with abortion protections have higher unionization rates, are more likely to have state minimum wages which exceed the federal minimum wage, and provide unemployment insurance at higher rates than states with abortion restrictions [@banerjee2023]. These studies indicate that abortion protections may result in measurably positive outcomes for women's economic health; can the same be said for mental health?
+
+The timing of the passage of the citizen-initiated constitutional amendment in Ohio provides a unique opportunity to answer this question. Ohio's amendment passed in the November 2023 general election. This falls between two waves of the Household Pulse Survey, which collected measures of mental health[@unitedstatescensusbureau2024]. It also, unlike abortion protection ballot measures in other states, did *not* occur simultaneously with a major midterm or presidential election, which would add noise to any estimates of mental health taken at that time. The present study will use difference-in-differences methodology to estimate the impact of Ohio's constitutional amendment protecting abortion rights on mental health.
+
+## Methods
+
+### Data Source
+
+I will be using data from the Census's Household Pulse Survey to assess mental health [@unitedstatescensusbureau2024]. Data from Phases 3.7 - 4.2 will be used; this covers from December 2022 to September 2024, in intervals of about a month. Exact dates for survey waves (called "weeks" and "cycles" in the HPS) are reported below in Table 1.
+
+| Survey Wave         | Study Period | Start Date | End Date   |
+|---------------------|--------------|------------|------------|
+| Phase 3.7, Week 52  | 1            | 2022-12-09 | 2022-12-19 |
+| Phase 3.7, Week 53  | 2            | 2023-01-04 | 2023-01-16 |
+| Phase 3.7, Week 54  | 3            | 2023-02-01 | 2023-02-13 |
+| Phase 3.8, Week 55  | 4            | 2023-03-01 | 2023-03-13 |
+| Phase 3.8, Week 56  | 5            | 2023-03-29 | 2023-04-10 |
+| Phase 3.8, Week 57  | 6            | 2023-04-26 | 2023-05-08 |
+| Phase 3.9, Week 58  | 7            | 2023-06-07 | 2023-06-19 |
+| Phase 3.9, Week 59  | 8            | 2023-06-28 | 2023-07-10 |
+| Phase 3.9, Week 60  | 9            | 2023-07-26 | 2023-08-07 |
+| Phase 3.10, Week 61 | 10           | 2023-08-23 | 2023-09-04 |
+| Phase 3.10, Week 62 | 11           | 2023-09-20 | 2023-10-02 |
+| Phase 3.10, Week 63 | 12           | 2023-10-18 | 2023-10-30 |
+| Phase 4.0, Cycle 1  | 13           | 2024-01-09 | 2024-02-05 |
+| Phase 4.0, Cycle 2  | 14           | 2024-02-06 | 2024-03-04 |
+| Phase 4.0, Cycle 3  | 15           | 2024-03-05 | 2024-04-01 |
+| Phase 4.1, Cycle 4  | 16           | 2024-04-02 | 2024-04-29 |
+| Phase 4.1, Cycle 5  | 17           | 2024-04-30 | 2024-05-27 |
+| Phase 4.1, Cycle 6  | 18           | 2024-05-28 | 2024-06-24 |
+| Phase 4.2, Cycle 7  | 19           | 2024-06-25 | 2024-07-22 |
+| Phase 4.2, Cycle 8  | 20           | 2024-07-23 | 2024-08-19 |
+| Phase 4.2, Cycle 9  | 21           | 2024-08-20 | 2024-09-16 |
+
+: Survey waves and dates for the Household Pulse Survey.
+
+Ohio's 2023 general election took place on November 7th, 2023, between study periods 12 and 13. This will be used as the treatment time for difference-in-differences.
+
+The HPS asked four questions related to mental health. All questions referenced the *past two weeks*; the questions asked respondents to choose how often (not at all, several days, more than half the days, or nearly every day) they were bothered by (1) feeling nervous, anxious, or on edge; (2) not being able to stop or control worrying; (3) having little interest or pleasure in doing things; and (4) feeling down, depressed, or hopeless. The scores on these questions were added together to form a single indicator of mental health - the PHQ-4 - which ranges from 0 to 12, with higher numbers indicating more pronounced symptoms of anxiety and depression. This measure has been shown to be valid and reliable in general populations, with a score of above 6 being a "yellow flag" and a score of above 9 being a "red flag" for depression or anxiety [@löwe2010]. The HPS, in the waves included in this study, reports respondents' current descriptions of their gender identity as well as a marker of their gender identity at birth. I attempt to most closely approximate the population that would be directly affected by abortion protections (or restrictions) by analyzing specifically the portion of the sample that reported being assigned "woman or female" at birth.
+
+When considering research based on the HPS, it is important to acknowledge the limitations of this data source, foremost among them being response rate. In the waves that I use, the HPS's response rate was between 5 and 10 percent. With a response rate so low, nonresponse bias becomes a concern. To help allay these fears, the HPS provides survey weights that adjust for nonresponse as well as population estimates of educational attainment and race by gender. These survey weights will be incorporated into my descriptive and inference-based analyses. Although nonresponse bias cannot be fully accounted for by these weights, I believe that they address the problem enough for us to interpret the results of my analyses without a great deal of concern.
+
+### Main Analyses
+
+The method that best suits this question is a difference-in-differences model, which can isolate the treatment effect of abortion protections on mental health. I use the R `did` package to analyze the HPS data, which is based on current best practices with regard to group-time average treatment effects [@callaway2021]. All models are clustered by state, and incorporate the HPS survey weights.
+
+I report both aggregated treatment effect estimates and dynamic treatment effect estimates. The reference group in Analysis 1 is women from all other states besides Ohio. One could contend that this reference group is too broad: it is possible that a different, more expansive sociopolitical reality made Ohio more likely to pass their abortion protection amendment, and separately this environment was supportive of women's mental health. If this were true, the difference-in-differences estimate would be "fooled" by this spurious relationship when comparing Ohio to states with very different sociopolitical realities. I performed Analysis 2 with women from Colorado, Arizona, Montana, Missouri, and Nevada as the reference group to help address these concerns. All of these states passed similar ballot measures to Ohio a year later in 2024; therefore, they can be considered a "not-yet-treated" group, which may be a better comparison (whatever broader sociopolitical reality may have existed in Ohio to make passage possible, these states evidently possessed as well).
+
+### A Word on Parallel Trends
+
+The parallel trends assumption upon which differences-in-differences analysis rests is fundamentally untestable; however, the `did` package implements a "gut-check" test of the assumption in the pre-treatment period, the p-values of which I report below (a non-significant p-value here means insufficient evidence to *reject* the parallel trends assumption).
+
+## Results
+
+### Main Analyses
+
+The included waves of the HPS include 1,437,696 observations; of those, 807,157 were women. 720,854 of these respondents answered the PHQ-4 questions. I use the full 720,854 for the analysis reported in Figure 1; of those, 12,729 are Ohioans. The analysis reported in Figure 2 has a total sample size of 83,372. The p-value for the pre-test of the parallel trends assumption in Analysis 1 was 0.583. In Analysis 2, the p-value was 0.852. Although, again, the parallel trends assumption cannot be directly tested, these large p-values provide some level of reassurance.
+
+The overall aggregated treatment effect for Analysis 1 was **-0.194** (95% CI: -0.268 to -0.120). The overall aggregated treatment effect for Analysis 2 was **-0.260** (95% CI: -0.465 to -0.055).
+
+```{r}
+#| label: figures
+#| echo: false
+dynamicte1_w |> 
+  ggdid() +
+  geom_vline(xintercept = -0.5, linetype = "dashed") +
+  geom_hline(yintercept = 0) +
+  geom_segment(aes(x = 0, xend = 8.5, y = -.194, yend = -.194), color = "turquoise3",
+               linetype = "dotted") +
+  geom_text(aes(x = 9, y = -.194), label = "ATT:\n-0.194", color = "turquoise3") +
+  labs(title = "Figure 1. Results of Analysis 1\n(OH women vs. women in all other states)")
+
+dynamicte2_w |> 
+  ggdid() +
+  geom_vline(xintercept = -0.5, linetype = "dashed") +
+  geom_hline(yintercept = 0) +
+  geom_segment(aes(x = 0, xend = 8.5, y = -.26, yend = -.26), color = "turquoise3",
+               linetype = "dotted") +
+  geom_text(aes(x = 9, y = -.26), label = "ATT:\n-0.260", color = "turquoise3") +
+  labs(title = "Figure 2. Results of Analysis 2\n(OH women vs. AZ, CO, MT, MO, & NV women)")
+```
+
+### Supplemental Analyses (Men)
+
+An important note is that Ohio actually passed *two* potentially significant ballot measures on November 7, 2023: the first is the abortion amendment that we have been focusing on in this study, but the second was a ballot measure to legalize recreational marijuana. In order to disentangle the effects of these two passed ballot measures, I perform two supplemental analyses, analogous to analyses 1 and 2 above, on the *men* in the HPS sample. If the decreasing effect observed in women of the November 7, 2023 election on anxiety & depressive symptoms was wholly or partially due to the marijuana legislation, we would expect to see a similar effect in men (or perhaps an even larger one, given that men use marijuana at higher rates than women [@carliner2017]). If the effect is isolated to women, we can say with confidence that the abortion amendment is the main driver.
+
+In analysis 3 below, the ATT was **0.064** (95% CI .005 to .123). The ATT in Analysis 4 was not statistically or practically different from zero. These results do *not* show a decreasing effect of the November 7, 2023 election on anxiety & depressive symptoms in Ohio men, and since we have no reason to believe that marijuana legislation would impact women significantly differently than men, this adds further evidence to the interpretation that the abortion amendment *in particular* affected women's mental health in Ohio.
+
+```{r}
+#| label: supplemental figures
+#| echo: false
+ dynamicte3_w |> 
+  ggdid() +
+  geom_vline(xintercept = -0.5, linetype = "dashed") +
+  geom_hline(yintercept = 0) +
+  geom_segment(aes(x = 0, xend = 8.5, y = .064, yend = .064), color = "turquoise3",
+               linetype = "dotted") +
+  geom_text(aes(x = 9, y = .064), label = "ATT", color = "turquoise3") +
+  labs(title = "Figure 3. Results of Analysis 3\n(OH men vs. men in all other states)")
+ 
+ dynamicte4_w |> 
+  ggdid() +
+  geom_vline(xintercept = -0.5, linetype = "dashed") +
+  geom_hline(yintercept = 0) +
+  labs(title = "Figure 4. Results of Analysis 4\n(OH men vs. AZ, CO, MT, MO, & NV men)")
+```
+
+## Discussion
+
+As depicted above, the passage of the constitutional amendment protecting abortion rights in Ohio *lowered* Ohio women's PHQ-4 scores in relation to other women by around 0.2 points (point estimates: -0.194 and -0.260). To interpret this in the context of other abortion and mental health research, this effect size is comparable to the magnitude of the effect size using Household Pulse Survey data reported in @thornburg2024 of the *Dobbs* decision, but in the opposite direction. These results make sense within the larger literature in medical sociology and epidemiology that ties feelings of control and autonomy to better health and mental health outcomes [@marmot2004; @marmot2015].
+
+One interesting facet of the dynamic treatment effect estimates is the *positive (deleterious)* effect of being in the treatment group (Ohio) in the period directly before the amendment passed. This phenomenon is especially visible in Figure 2, comparing Ohio to other similar states. This finding makes sense theoretically, especially when considering the timing of the survey waves. The wave directly before the passage of Ohio's constitutional amendment on November 7 was in the field between October 18 and October 30. It is possible that women in Ohio, compared to women in other states, were caused *more* anxiety by the lead-up to the 2023 election cycle. Odd-year election cycles are usually considered relatively low-stakes when compared to their midterm and presidential counterparts, and for most states, 2023 was no different; Ohioan women, however, knew that this particular election could conceivably alter the landscape of their bodily autonomy, which may have increased their symptoms of anxiety in the days leading up to the election. However, we see that this increase is only temporary, and is followed by a *persistent* *decrease* in symptoms of anxiety and depression compared to women in other states post-election.
+
+As more and more evidence, both scholarly and journalistic, abounds that restrictions to abortions are bad for a variety of reasons, this paper may be seen as a bit of hope: that citizen-initiated action can make a tangible difference in mental health. Ohioans live in a gerrymandered state with representatives who are measurably more conservative than the population they represent [@oconnor2024]; in this case, the people were able to bypass long and convoluted pathways to change through their state legislature and directly improve the bodily autonomy and mental health of women in their state by simply collecting signatures and voting.
+
+\pagebreak
+
+## References
