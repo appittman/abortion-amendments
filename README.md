@@ -1,8 +1,11 @@
 # abortion-amendments
-looking at citizen-initiated ballot measures to amend state constitutions to protect reproductive rights
+looking at the citizen-initiated constitutional amendment to protect abortion rights in Ohio & its impact on the mental health of Ohioan women
 
-# workflow
+# workflow from scratch
 run `data_acquisition.R`
+
 then, run `analysis.R`
+
 then, run `abortionamendmentsdraft.qmd`
+
 
