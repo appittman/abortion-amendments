@@ -97,19 +97,24 @@ dynamicte1_w |>
   ggdid() +
   geom_vline(xintercept = -0.5, linetype = "dashed") +
   geom_hline(yintercept = 0) +
-  geom_segment(aes(x = 0, xend = 8.5, y = -.194, yend = -.194), color = "turquoise3",
-               linetype = "dotted") +
-  geom_text(aes(x = 9, y = -.194), label = "ATT:\n-0.194", color = "turquoise3") +
+  geom_segment(aes(x = 0, xend = 8.5, y = -.194, yend = -.194), color = "#00BFC4",
+               linetype = "dotted",
+               linewidth = 1) +
+  geom_text(aes(x = 9, y = -.194), label = "ATT:\n-0.194", color = "#00BFC4", size = 5) +
   labs(title = "Figure 1. Results of Analysis 1\n(OH women vs. women in all other states)")
 
 dynamicte2_w |> 
   ggdid() +
   geom_vline(xintercept = -0.5, linetype = "dashed") +
   geom_hline(yintercept = 0) +
-  geom_segment(aes(x = 0, xend = 8.5, y = -.26, yend = -.26), color = "turquoise3",
-               linetype = "dotted") +
-  geom_text(aes(x = 9, y = -.26), label = "ATT:\n-0.260", color = "turquoise3") +
+  geom_segment(aes(x = 0, xend = 8.5, y = -.26, yend = -.26), color = "#00BFC9",
+               linetype = "dotted",
+               linewidth = 1) +
+  geom_text(aes(x = 9, y = -.26), label = "ATT:\n-0.260", color = "#00BFC9", size = 5) +
   labs(title = "Figure 2. Results of Analysis 2\n(OH women vs. AZ, CO, MT, MO, & NV women)")
+
+
+?scales
 ```
 
 ### Supplemental Analyses (Men)
@@ -125,9 +130,9 @@ In analysis 3 below, the ATT was **0.064** (95% CI .005 to .123). The ATT in Ana
   ggdid() +
   geom_vline(xintercept = -0.5, linetype = "dashed") +
   geom_hline(yintercept = 0) +
-  geom_segment(aes(x = 0, xend = 8.5, y = .064, yend = .064), color = "turquoise3",
+  geom_segment(aes(x = 0, xend = 8.5, y = .064, yend = .064), color = "#00BFC4",
                linetype = "dotted") +
-  geom_text(aes(x = 9, y = .064), label = "ATT", color = "turquoise3") +
+  geom_text(aes(x = 9, y = .064), label = "ATT", color = "#00BFC4") +
   labs(title = "Figure 3. Results of Analysis 3\n(OH men vs. men in all other states)")
  
  dynamicte4_w |> 
